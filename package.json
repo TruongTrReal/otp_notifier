@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "play-sound": "^1.1.6",
+    "selenium-webdriver": "^4.29.0"
+  },
+  "devDependencies": {
+    "@types/play-sound": "^1.1.2"
+  }
+}
