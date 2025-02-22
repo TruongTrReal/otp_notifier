@@ -46,11 +46,11 @@ async function login(driver, account, logger) {
     try {
         logger.info('Navigating to login page');
         await driver.get(LOGIN_URL);
-
+        await driver.sleep(3000);
         logger.info('Entering credentials');
         await driver.findElement(By.css('#email')).sendKeys(account.username);
         await driver.findElement(By.css('#password')).sendKeys(account.password);
-        await driver.sleep(1000);
+        await driver.sleep(2000);
         logger.info('Submitting login form');
         await driver.findElement(By.css('#__next > main > div > div.ant-layout.ant-layout-has-sider.sc-gEVAOR.kNNTpX.css-1tijx3l > div > main > div > div:nth-child(3) > form > div > div.ant-col.ant-col-24.sc-NySBO.jTyCwB.css-1tijx3l > button')).click();
 
@@ -95,13 +95,13 @@ async function monitorVerification(driver, logger) {
                 playSound('ping.mp3', (err) => {
                     if (err) logger.error('Error playing sound:', err);
                 });
-                // Add additional notification methods here if needed
-                break;
+                await driver.navigate().refresh();
+                await driver.sleep(REFRESH_INTERVAL);
+            } else {
+                logger.info('No OTP found, refreshing page...');
+                await driver.navigate().refresh();
+                await driver.sleep(REFRESH_INTERVAL);
             }
-
-            logger.info('No OTP found, refreshing page...');
-            await driver.navigate().refresh();
-            await driver.sleep(REFRESH_INTERVAL);
         }
     } catch (error) {
         logger.error(`Monitoring failed: ${error.message}`);
