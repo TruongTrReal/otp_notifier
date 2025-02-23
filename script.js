@@ -33,7 +33,7 @@ async function readAccounts() {
 
 async function setupDriver() {
     const options = new chrome.Options();
-    // options.addArguments('--headless'); // Uncomment for headless mode
+    options.addArguments('--start-maximized');
     const driver = await new Builder()
         .forBrowser('chrome')
         .setChromeOptions(options)
@@ -92,9 +92,9 @@ async function monitorVerification(driver, logger) {
             
             if (!hasNoData) {
                 logger.info('OTP verification detected!');
-                playSound('ping.mp3', (err) => {
-                    if (err) logger.error('Error playing sound:', err);
-                });
+                // playSound('ping.mp3', (err) => {
+                //     if (err) logger.error('Error playing sound:', err);
+                // });
                 await driver.navigate().refresh();
                 await driver.sleep(REFRESH_INTERVAL);
             } else {
